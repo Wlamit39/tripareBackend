@@ -2,10 +2,16 @@ import express from 'express';
 
 const router = express.Router();
 
-const b_response = {"hotelId": "b1", "name": "Hotel Sunset", "price": 130};
+const b_responses = [
+                    {"hotelId": "b1", "name": "Hotel Sunset", "price": 100, "city":"delhi"},
+                    {"hotelId": "b2", "name": "Hotel Sunset", "price": 110, "city":"mumbai"},
+                    {"hotelId": "b3", "name": "Hotel Sunset", "price": 130, "city":"benglore"}
+                  ];
 
 router.get('/hotels', function (req: express.Request, res: express.Response): void {
   const testCase = req.query.testCase;
+  const city = req.query.city;
+
   console.log(testCase, ">>>>>1b>>>>>")
 
   if (testCase) {
@@ -14,19 +20,19 @@ router.get('/hotels', function (req: express.Request, res: express.Response): vo
         res.json([]);
         return;
       case 'B-cheaper':
-        res.json([b_response]);
+        res.json([b_responses[0]]);
         return;
       case 'same-rate':
         res.json([]);
         return;
       case 'A-fails-B-succeeds':
-        res.json([b_response]);
+        res.json([b_responses[0]]);
         return;
       case 'both-fail':
         res.status(500).json({ error: 'Supplier A failed' });
         return;
       case 'A-empty-B-valid':
-        res.json([b_response]);
+        res.json([b_responses[0]]);
         return;
       case 'both-empty':
         res.json([]);
@@ -47,7 +53,8 @@ router.get('/hotels', function (req: express.Request, res: express.Response): vo
     } else if (shouldReturnEmpty) {
       res.json([]);
     } else {
-      res.json([b_response]);
+      const matchedHotel = b_responses.find(hotel => hotel.city.toLowerCase() === city);
+      res.json([matchedHotel]);
     }
   }, delay);
 });

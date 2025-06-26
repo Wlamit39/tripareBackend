@@ -12,7 +12,8 @@ interface SupplierResult {
 export async function fetchFromSupplierA(
   checkIn: string,
   checkOut: string,
-  testCase?: string
+  testCase?: string,
+  city?: string
 ): Promise<SupplierResult> {
     try {
       const params: Record<string, string> = {
@@ -22,6 +23,9 @@ export async function fetchFromSupplierA(
 
       if (testCase) {
         params.testCase = testCase;
+      }
+      if (city) {
+        params.city = city;
       }
 
     const res = await axios.get('http://localhost:3100/supplierA/hotels', { 
@@ -44,7 +48,8 @@ export async function fetchFromSupplierA(
 export async function fetchFromSupplierB(
   checkIn: string,
   checkOut: string,
-  testCase: string
+  testCase: string,
+  city: string
 ): Promise<SupplierResult> {
   try {
     const params: Record<string, string> = {
@@ -55,6 +60,10 @@ export async function fetchFromSupplierB(
       if (testCase) {
         params.testCase = testCase;
       }
+      if (city) {
+        params.city = city;
+      }
+
       console.log('👀 Fetching from Supplier A with params =', params);
     const res = await axios.get('http://localhost:3100/supplierB/hotels', { 
       timeout: 5000,

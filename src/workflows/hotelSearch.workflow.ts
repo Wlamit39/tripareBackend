@@ -9,6 +9,7 @@ export interface SearchInput {
   checkIn: string;
   checkOut: string;
   testCase?: string;
+  city?: string;
 }
 
 export interface Hotel {
@@ -28,8 +29,8 @@ export interface SearchResult {
 export async function hotelSearchWorkflow(input: SearchInput): Promise<SearchResult> {
   console.log('💡 Workflow input:', input);
   const [a, b] = await Promise.all([
-    fetchFromSupplierA(input.checkIn, input.checkOut, input.testCase ?? ''),
-    fetchFromSupplierB(input.checkIn, input.checkOut, input.testCase ?? ''),
+    fetchFromSupplierA(input.checkIn, input.checkOut, input.testCase ?? '', input.city?? ''),
+    fetchFromSupplierB(input.checkIn, input.checkOut, input.testCase ?? '', input.city?? ''),
   ]);
 
   const diagnostics = {

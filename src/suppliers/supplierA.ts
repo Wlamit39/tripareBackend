@@ -2,24 +2,29 @@ import express from 'express';
 
 const router = express.Router();
 
-const a_response = { hotelId: 'a1', name: 'Hotel Sunrise', price: 145.0 };
+const a_responses = [
+                    { hotelId: 'a1', name: 'Hotel Sunrise', price: 115.0, "city":"delhi"}, 
+                    { hotelId: 'a2', name: 'Hotel Sunrise', price: 125.0, "city":"mumbai"},
+                    { hotelId: 'a3', name: 'Hotel Sunrise', price: 145.0, "city":"benglore"}
+                  ];
 
 router.get('/hotels', function (req: express.Request, res: express.Response): void {
   const testCase = req.query.testCase;
+  const city = req.query.city;
   console.log(testCase, ">>>>>1a>>>>>")
   console.log('🔍 supplierA req.query:', JSON.stringify(req.query));
 
   if (testCase) {
     switch (testCase) {
       case 'A-cheaper':
-        res.json([a_response]);
+        res.json([a_responses[0]]);
         return;
       case 'B-cheaper':
         res.json([]);
         return;
       case 'same-rate':
         console.log(testCase,">>>>>>same-rate")
-        res.json([a_response]);
+        res.json([a_responses[0]]);
         return;
       case 'A-fails-B-succeeds':
         res.json([]);
@@ -49,7 +54,8 @@ router.get('/hotels', function (req: express.Request, res: express.Response): vo
     } else if (shouldReturnEmpty) {
       res.json([]);
     } else {
-      res.json([a_response]);
+      const matchedHotel = a_responses.find(hotel => hotel.city.toLowerCase() === city);
+      res.json([matchedHotel]);
     }
   }, delay);
 });

@@ -23,6 +23,7 @@ describe('hotelSearchWorkflow - full integration tests on dev server', () => {
     testCase,
     checkIn: '2025-07-01',
     checkOut: '2025-07-03',
+    city: 'delhi',
   });
 
   it('1. Supplier A cheaper', async () => {
