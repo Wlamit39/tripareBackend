@@ -28,7 +28,7 @@ export interface SearchResult {
 export async function hotelSearchWorkflow(input: SearchInput): Promise<SearchResult> {
   console.log('💡 Workflow input:', input);
   const [a, b] = await Promise.all([
-    fetchFromSupplierB(input.checkIn, input.checkOut, input.testCase ?? ''),
+    fetchFromSupplierA(input.checkIn, input.checkOut, input.testCase ?? ''),
     fetchFromSupplierB(input.checkIn, input.checkOut, input.testCase ?? ''),
   ]);
 

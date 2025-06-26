@@ -1,5 +1,7 @@
 // src/workflows/activities.ts
 import axios from 'axios';
+console.log('🧠 activities.ts file loaded');
+
 
 interface SupplierResult {
   status: 'success' | 'empty' | 'error';
@@ -18,7 +20,6 @@ export async function fetchFromSupplierA(
         checkOut,
       };
 
-      console.log(testCase,"_________")
       if (testCase) {
         params.testCase = testCase;
       }
@@ -27,7 +28,7 @@ export async function fetchFromSupplierA(
       timeout: 5000,
       params, 
     });
-
+    console.log('👀 Fetching from Supplier A with params =', params);
     console.log("supplier A res", res)
     if (!res.data || res.data.length === 0) {
       return { status: 'empty', data: [] };
@@ -43,7 +44,7 @@ export async function fetchFromSupplierA(
 export async function fetchFromSupplierB(
   checkIn: string,
   checkOut: string,
-  testCase?: string
+  testCase: string
 ): Promise<SupplierResult> {
   try {
     const params: Record<string, string> = {
@@ -54,6 +55,7 @@ export async function fetchFromSupplierB(
       if (testCase) {
         params.testCase = testCase;
       }
+      console.log('👀 Fetching from Supplier A with params =', params);
     const res = await axios.get('http://localhost:3100/supplierB/hotels', { 
       timeout: 5000,
       params, 
@@ -67,7 +69,6 @@ export async function fetchFromSupplierB(
     return { status: 'success', data: res.data };
   } catch (err) {
     const message = err instanceof Error ? err.message : 'Unknown error';
-    console.error('Supplier B failed:', message);
     return { status: 'error', data: [], error: message };
   }
 }
