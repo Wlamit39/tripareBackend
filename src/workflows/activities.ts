@@ -8,12 +8,25 @@ interface SupplierResult {
 }
 
 export async function fetchFromSupplierA(
-  city: string,
   checkIn: string,
-  checkOut: string
+  checkOut: string,
+  testCase?: string
 ): Promise<SupplierResult> {
-  try {
-    const res = await axios.get('http://localhost:3100/supplierA/hotels', { timeout: 5000 });
+    try {
+      const params: Record<string, string> = {
+        checkIn,
+        checkOut,
+      };
+
+      console.log(testCase,"_________")
+      if (testCase) {
+        params.testCase = testCase;
+      }
+
+    const res = await axios.get('http://localhost:3100/supplierA/hotels', { 
+      timeout: 5000,
+      params, 
+    });
 
     console.log("supplier A res", res)
     if (!res.data || res.data.length === 0) {
@@ -28,12 +41,23 @@ export async function fetchFromSupplierA(
 }
 
 export async function fetchFromSupplierB(
-  city: string,
   checkIn: string,
-  checkOut: string
+  checkOut: string,
+  testCase?: string
 ): Promise<SupplierResult> {
   try {
-    const res = await axios.get('http://localhost:3100/supplierB/hotels', { timeout: 5000 });
+    const params: Record<string, string> = {
+        checkIn,
+        checkOut,
+      };
+
+      if (testCase) {
+        params.testCase = testCase;
+      }
+    const res = await axios.get('http://localhost:3100/supplierB/hotels', { 
+      timeout: 5000,
+      params, 
+    });
 
     console.log("supplier B res", res)
     if (!res.data || res.data.length === 0) {
@@ -43,6 +67,7 @@ export async function fetchFromSupplierB(
     return { status: 'success', data: res.data };
   } catch (err) {
     const message = err instanceof Error ? err.message : 'Unknown error';
+    console.error('Supplier B failed:', message);
     return { status: 'error', data: [], error: message };
   }
 }

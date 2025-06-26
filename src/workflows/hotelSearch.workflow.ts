@@ -6,9 +6,9 @@ const { fetchFromSupplierA, fetchFromSupplierB } = proxyActivities<typeof activi
 });
 
 export interface SearchInput {
-  city: string;
   checkIn: string;
   checkOut: string;
+  testCase?: string;
 }
 
 export interface Hotel {
@@ -26,9 +26,10 @@ export interface SearchResult {
 }
 
 export async function hotelSearchWorkflow(input: SearchInput): Promise<SearchResult> {
+  console.log('💡 Workflow input:', input);
   const [a, b] = await Promise.all([
-    fetchFromSupplierA(input.city, input.checkIn, input.checkOut),
-    fetchFromSupplierB(input.city, input.checkIn, input.checkOut),
+    fetchFromSupplierB(input.checkIn, input.checkOut, input.testCase ?? ''),
+    fetchFromSupplierB(input.checkIn, input.checkOut, input.testCase ?? ''),
   ]);
 
   const diagnostics = {

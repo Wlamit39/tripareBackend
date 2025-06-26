@@ -20,7 +20,7 @@ async function searchHotelsHandler(req: Request, res: Response): Promise<void> {
     const response = await client.workflow.execute(hotelSearchWorkflow, {
       taskQueue: 'hotel-search',
       workflowId: `hotel-search-${Date.now()}`,
-      args: [{ city, checkIn, checkOut }],
+      args: [{checkIn, checkOut }],
     });
 
     console.log(response, "response")
