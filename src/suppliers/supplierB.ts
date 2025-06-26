@@ -37,6 +37,13 @@ router.get('/hotels', function (req: express.Request, res: express.Response): vo
       case 'both-empty':
         res.json([]);
         return;
+      case 'B-timeout':
+        console.log("oiuytretyuio")
+        setTimeout(() => {
+          res.json([b_responses[0]]);
+        }, 6000); // simulate 6s delay
+        return;
+
       default:
         res.status(400).json({ error: 'Unknown testCase' });
         return;

@@ -11,7 +11,6 @@ const a_responses = [
 router.get('/hotels', function (req: express.Request, res: express.Response): void {
   const testCase = req.query.testCase;
   const city = req.query.city;
-  console.log(testCase, ">>>>>1a>>>>>")
   console.log('🔍 supplierA req.query:', JSON.stringify(req.query));
 
   if (testCase) {
@@ -37,6 +36,12 @@ router.get('/hotels', function (req: express.Request, res: express.Response): vo
         return;
       case 'both-empty':
         res.json([]);
+        return;
+      case 'A-timeout':
+        console.log("oiuytretyuio")
+        setTimeout(() => {
+          res.json([a_responses[0]]);
+        }, 6000); // simulate 6s delay
         return;
       default:
         res.status(400).json({ error: 'Unknown testCase' });
