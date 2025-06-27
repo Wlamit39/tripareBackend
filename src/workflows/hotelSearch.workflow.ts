@@ -45,7 +45,8 @@ export async function hotelSearchWorkflow(input: SearchInput): Promise<SearchRes
     supplierB: b.status === 'error' ? `error: ${b.error}` : b.status,
   };
 
-  const allHotels = [...a.data[0], ...b.data[0]];
+  console.log(a, b, "<<<<<ABABABAB>>>>>")
+  const allHotels = [...a.data, ...b.data];
   if (allHotels.length === 0) {
     return { result: null, diagnostics };
   }
@@ -53,6 +54,7 @@ export async function hotelSearchWorkflow(input: SearchInput): Promise<SearchRes
   // const cheapest = allHotels.reduce((min, h) => (h.price < min.price ? h : min));
 
   const hotelMap = new Map<string, Hotel>();
+  console.log(allHotels, "-------alll ")
   
   for (const hotel of allHotels) {
     console.log(hotel, ">>>>>hotel<<<<<")

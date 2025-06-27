@@ -61,7 +61,7 @@ router.get('/hotels', function (req: express.Request, res: express.Response): vo
       res.json([]);
     } else {
       const matchedHotel = b_responses.filter(hotel => hotel.city.toLowerCase() === city);
-      res.json([matchedHotel]);
+      res.json(matchedHotel);
     }
   }, delay);
 });
