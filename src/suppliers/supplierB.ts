@@ -3,9 +3,9 @@ import express from 'express';
 const router = express.Router();
 
 const b_responses = [
-                    {"hotelId": "b1", "name": "Hotel Sunset", "price": 100, "city":"delhi"},
-                    {"hotelId": "b2", "name": "Hotel Sunset", "price": 110, "city":"mumbai"},
-                    {"hotelId": "b3", "name": "Hotel Sunset", "price": 130, "city":"benglore"}
+                    {"hotelId": "b1", "name": "Hotel Sunset1", "price": 100, "city":"delhi"},
+                    {"hotelId": "b2", "name": "Hotel Sunset2", "price": 130, "city":"delhi"},
+                    {"hotelId": "b3", "name": "Hotel Sunset3", "price": 130, "city":"delhi"}
                   ];
 
 router.get('/hotels', function (req: express.Request, res: express.Response): void {
@@ -20,19 +20,19 @@ router.get('/hotels', function (req: express.Request, res: express.Response): vo
         res.json([]);
         return;
       case 'B-cheaper':
-        res.json([b_responses[0]]);
+        res.json([b_responses]);
         return;
       case 'same-rate':
         res.json([]);
         return;
       case 'A-fails-B-succeeds':
-        res.json([b_responses[0]]);
+        res.json([b_responses]);
         return;
       case 'both-fail':
         res.status(500).json({ error: 'Supplier A failed' });
         return;
       case 'A-empty-B-valid':
-        res.json([b_responses[0]]);
+        res.json([b_responses]);
         return;
       case 'both-empty':
         res.json([]);
@@ -40,7 +40,7 @@ router.get('/hotels', function (req: express.Request, res: express.Response): vo
       case 'B-timeout':
         console.log("oiuytretyuio")
         setTimeout(() => {
-          res.json([b_responses[0]]);
+          res.json([b_responses]);
         }, 6000); // simulate 6s delay
         return;
 
@@ -60,7 +60,7 @@ router.get('/hotels', function (req: express.Request, res: express.Response): vo
     } else if (shouldReturnEmpty) {
       res.json([]);
     } else {
-      const matchedHotel = b_responses.find(hotel => hotel.city.toLowerCase() === city);
+      const matchedHotel = b_responses.filter(hotel => hotel.city.toLowerCase() === city);
       res.json([matchedHotel]);
     }
   }, delay);

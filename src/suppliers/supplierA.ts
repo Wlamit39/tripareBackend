@@ -3,9 +3,9 @@ import express from 'express';
 const router = express.Router();
 
 const a_responses = [
-                    { hotelId: 'a1', name: 'Hotel Sunrise', price: 115.0, "city":"delhi"}, 
-                    { hotelId: 'a2', name: 'Hotel Sunrise', price: 125.0, "city":"mumbai"},
-                    { hotelId: 'a3', name: 'Hotel Sunrise', price: 145.0, "city":"benglore"}
+                    { hotelId: 'a1', name: 'Hotel Sunset1', price: 115.0, "city":"delhi"}, 
+                    { hotelId: 'a2', name: 'Hotel Sunset2', price: 125.0, "city":"delhi"},
+                    { hotelId: 'a3', name: 'Hotel Sunset3', price: 145.0, "city":"delhi"}
                   ];
 
 router.get('/hotels', function (req: express.Request, res: express.Response): void {
@@ -16,14 +16,13 @@ router.get('/hotels', function (req: express.Request, res: express.Response): vo
   if (testCase) {
     switch (testCase) {
       case 'A-cheaper':
-        res.json([a_responses[0]]);
+        res.json([a_responses]);
         return;
       case 'B-cheaper':
         res.json([]);
         return;
       case 'same-rate':
-        console.log(testCase,">>>>>>same-rate")
-        res.json([a_responses[0]]);
+        res.json([a_responses]);
         return;
       case 'A-fails-B-succeeds':
         res.json([]);
@@ -59,7 +58,7 @@ router.get('/hotels', function (req: express.Request, res: express.Response): vo
     } else if (shouldReturnEmpty) {
       res.json([]);
     } else {
-      const matchedHotel = a_responses.find(hotel => hotel.city.toLowerCase() === city);
+      const matchedHotel = a_responses.filter(hotel => hotel.city.toLowerCase() === city);
       res.json([matchedHotel]);
     }
   }, delay);
