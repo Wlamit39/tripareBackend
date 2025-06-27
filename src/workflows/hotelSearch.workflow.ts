@@ -2,12 +2,12 @@ import { proxyActivities } from '@temporalio/workflow';
 import type * as activities from './activities';
 
 const { fetchFromSupplierA, fetchFromSupplierB } = proxyActivities<typeof activities>({
-  startToCloseTimeout: '4 seconds',
+  startToCloseTimeout: '5 seconds',
   retry: {
     initialInterval: '1s',       // first retry delay
     backoffCoefficient: 2.0,     // exponential backoff factor
     maximumAttempts: 3,          // total attempts = 1 original + 2 retries
-    maximumInterval: '10s',      // max delay between retries
+    maximumInterval: '5s',      // max delay between retries
     nonRetryableErrorTypes: ['ValidationError'], // skip retry if this is the error type thrown
   },
 });
