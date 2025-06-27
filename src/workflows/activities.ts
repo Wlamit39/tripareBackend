@@ -21,7 +21,7 @@ export async function fetchFromSupplierA(
 ): Promise<SupplierResult> {
     supplierARetryCounter++;
     console.log(supplierACallCount, "999999")
-    if (supplierARetryCounter === 1 || supplierARetryCounter === 2|| supplierARetryCounter === 3|| supplierARetryCounter === 4) {
+    if (supplierARetryCounter === 1 || supplierARetryCounter === 2) {
       console.log('❌ Simulating failure for retry-test on first attempt');
       throw new Error('Simulated transient error in Supplier A');
     }
